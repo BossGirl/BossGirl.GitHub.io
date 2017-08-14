@@ -2,8 +2,8 @@
 layout: post
 title: "利用Burpsuite修改http头"
 date: 2017-08-11 14:58:44
-description: "CTF"
-tag: CTF
+description: "Web"
+tag: Web
 ---
 
 ## 头有点大[实验吧]
