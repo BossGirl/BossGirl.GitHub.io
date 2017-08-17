@@ -2,7 +2,7 @@
 layout: post
 title: "ISCC_2017部分题目WriteUp"
 date: 2017-5-25 14:58:44
-description: "ISCC2017部分题目WP"
+description: "ISCC_2017部分题目WriteUp"
 tag: CTF
 ---
 
