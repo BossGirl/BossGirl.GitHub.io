@@ -12,7 +12,7 @@ tag: 总结
 
 #### 题目描述：
 
-![image-20200517224348519](images/oj_wp/image-20200517224348519.png)
+![image-20200517224348519](/images/oj_wp/image-20200517224348519.png)
 
 
 
@@ -20,7 +20,7 @@ tag: 总结
 
 既然题目要求在1.5s内解出答案，肯定得用脚本了。抓包获取cookies然后放在脚本里就OK了，脚本猜测有写得更简洁的方法，但我暂时想到的就是这样。
 
-![image-20200517153139132](images/oj_wp/image-20200517153139132.png)
+![image-20200517153139132](/images/oj_wp/image-20200517153139132.png)
 
 #### 解题脚本
 
@@ -52,7 +52,7 @@ print(response.content)
 b'<!DOCTYPE html>\r\n<html>\r\n<head>\r\n\t<title>Calculator</title>\r\n\t<style type="text/css">\r\n\t\t.line_input{\r\n\t\t\tborder-width: 1px;\r\n\t\t\tborder-bottom: solid;\r\n\t\t\tborder-top: none;\r\n\t\t\tborder-left: none;\r\n\t\t\tborder-right: none;\r\n\t\t\tborder-width: 1px;\r\n\t\t\ttext-align: center;\r\n\t\t\toutline: none;\r\n\t\t\tmargin: 0 1em;\r\n\t\t}\r\n\t</style>\r\n</head>\r\n<body>\r\n<center>\r\n<h1>Yet Another Calculator</h1>\r\nflag{yes_you_are_calculat0r}<br />Time elapsed: 0.23214817047119 s<br />\r\n</center>\r\n</body>\r\n</html>'
 ```
 
-![image-20200517121543980](images/oj_wp/image-20200517121543980.png)
+![image-20200517121543980](/images/oj_wp/image-20200517121543980.png)
 
 
 
@@ -110,5 +110,5 @@ show_source(__FILE__);
 
 有一些字符串md5加密后以0e开头，PHP在使用这些字符串时，会将字符串当作科学技术法来解释为0，从而使`==`成立。
 
-![image-20200517155517748](images/oj_wp/image-20200517155517748.png)
+![image-20200517155517748](/images/oj_wp/image-20200517155517748.png)
 
