@@ -1,14 +1,28 @@
 ---
 layout: post
-title: "day1 ouc_oj"
-date:  2020-05-17 14:58:44
-description: "day1 wp"
+title: "day2 ouc_oj"
+date:  2020-05-18 14:58:44
+description: "day2 wp"
 tag: 总结
 ---
 
 ## Web-Part
 
-### Calculator
+### day2-Rapid Typing
+
+#### 题目描述
+
+![image-20200518180932073](/images/oj_wp/image-20200518180932073.png)
+
+#### 解题思路：
+
+抓包发现base64，解码得到一个html，用BeautifulSoup就可以了，一开始没注意还有坐标问题，试了好几次都不对==、
+
+![image-20200518180842561](/Users/secat/SKSEC/GitHub/BossGirl.github.io/_posts/image-20200518180842561.png)
+
+
+
+### day1-Calculator
 
 #### 题目描述：
 
@@ -56,7 +70,7 @@ b'<!DOCTYPE html>\r\n<html>\r\n<head>\r\n\t<title>Calculator</title>\r\n\t<style
 
 
 
-### PHP's basic feature
+### day1-PHP's basic feature
 
 #### 题目描述
 
@@ -111,4 +125,3 @@ show_source(__FILE__);
 有一些字符串md5加密后以0e开头，PHP在使用这些字符串时，会将字符串当作科学技术法来解释为0，从而使`==`成立。
 
 ![image-20200517155517748](/images/oj_wp/image-20200517155517748.png)
-
