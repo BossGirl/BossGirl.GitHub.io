@@ -18,7 +18,7 @@ tag: 总结
 
 抓包发现base64，解码得到一个html，用BeautifulSoup就可以了，一开始没注意还有坐标问题，试了好几次都不对==、
 
-![image-20200518180842561](/Users/secat/SKSEC/GitHub/BossGirl.github.io/_posts/image-20200518180842561.png)
+![image-20200518180842561](/images/oj_wp/image-20200518180842561.png)
 
 今天只做了一个题，希望赶紧把毕设搞完就可以愉快地做题了
 
