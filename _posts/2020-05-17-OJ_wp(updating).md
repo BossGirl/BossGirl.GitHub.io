@@ -1,12 +1,30 @@
 ---
 layout: post
-title: "day2 ouc_oj"
-date:  2020-05-18 14:58:44
-description: "day2 wp"
+title: "day3 ouc_oj"
+date:  2020-05-19 14:58:44
+description: "day3 wp"
 tag: 总结
 ---
 
 ## Web-Part
+
+### day3-Basic PHP 2
+
+#### 题目描述：
+
+![image-20200519205227987](/images/oj_wp/image-20200519205227987.png)
+
+![image-20200519205317245](/images/oj_wp/image-20200519205317245.png)
+
+#### 解题思路
+
+try写个shell进去，但是又过滤了`<` 和`php`，对于stripos()函数可以使用数组绕过，传入`？content[]=<?php>`，显示success后访问./config.php，就获得了flag...
+
+8继续肝论文去了QAQ
+
+![image-20200519205631617](/images/oj_wp/image-20200519205631617.png)
+
+
 
 ### day2-Rapid Typing
 
