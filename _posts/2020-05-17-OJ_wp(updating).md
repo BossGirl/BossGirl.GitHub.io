@@ -111,7 +111,7 @@ Wireshark打开文件，然后追踪http流，发现有一组数据中提到flag
 
 #### 题目描述：
 
-![image-20200525214432331](/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200525214432331.png)
+![image-20200525214432331](/images/oj_wp/image-20200525214432331.png)
 
 #### 解题思路：
 
@@ -127,7 +127,7 @@ http://vps1.blue-whale.me:23338/?page=php://filter/read=convert.base64-encode/re
 
 其中`read`的过滤器为base64，意为把输入流进行base64编码；`resource`指的是所要读取的文件
 
-![image-20200525215718596](/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200525215718596.png)
+![image-20200525215718596](/images/oj_wp/image-20200525215718596.png)
 
 对获取到的内容进行base64解码，得到以下内容，get flag
 
@@ -144,7 +144,7 @@ ha ha? you want flag? flag is here<?php
 
 #### 题目描述：
 
-![image-20200525220221182](/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200525220221182.png)
+![image-20200525220221182](/images/oj_wp/image-20200525220221182.png)
 
 #### 解题思路：
 
