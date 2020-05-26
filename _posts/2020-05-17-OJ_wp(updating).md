@@ -1,10 +1,22 @@
 ---
 layout: post
-title: "day9 ouc_oj"
-date:  2020-05-25 14:58:44
-description: "day9 wp"
+title: "day10 ouc_oj"
+date:  2020-05-26 14:58:44
+description: "day10 log"
 tag: 总结
 ---
+
+
+
+> 
+>
+> 今天把除了二进制要求做的都做完了，明天，0基础开始try bin。
+>
+> writeup写的比较粗略，只放了比较短的脚本
+>
+> 
+
+
 
 # Misc Part
 
@@ -12,27 +24,23 @@ tag: 总结
 
 观察字符串可以发现每隔一个数字就有一个3，推测字符串为每两个一组，进行统计，发现范围都在30-39之内:
 
-<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526205526159.png" alt="image-20200526205526159" style="zoom:33%;" />
+<img src="/images/oj_wp/image-20200526205526159.png" alt="image-20200526205526159" style="zoom:33%;" />
 
 将分割后的字符串处理，得到0-9组成的字符串,该字符串和上一组一样，每隔一个数字就有一个3，继续分割处理，发现范围在30-46之间，没有40，一共十六个数，猜测应该把字符转为十六进制
 
-<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526205421582.png" alt="image-20200526205421582" style="zoom:33%;" />
+<img src="/images/oj_wp/image-20200526205421582.png" alt="image-20200526205421582" style="zoom:33%;" />
 
-<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526210333860.png" alt="image-20200526210333860" style="zoom:33%;" />
+<img src="/images/oj_wp/image-20200526210333860.png" alt="image-20200526210333860" style="zoom:33%;" />
 
 对得到的十六进制字符串进行ascii解码，得到一串base64编码后的字符串
 
-<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526210730244.png" alt="image-20200526210730244" style="zoom:33%;" />
+<img src="/images/oj_wp/image-20200526210730244.png" alt="image-20200526210730244" style="zoom:33%;" />
 
 对该字符串进行解码,的到base32编码后的字符串，
 
-<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526210916045.png" alt="image-20200526210916045" style="zoom:33%;" />
+<img src="/images/oj_wp/image-20200526210916045.png" alt="image-20200526210916045" style="zoom:33%;" />
 
 对该字符串进行解码的到一串base32编码的字符串，继续解码，又的到base32编码，继续解码，的到一串base64编码的字符串，继续解码，又的到30-46的字符
-
-...
-
-...
 
 ...
 
@@ -44,9 +52,11 @@ tag: 总结
 
 日志文件中是很多条数据，首先进行URL解码得到可读字符串，可以发现，在第1751组数据之后才是关于flag的盲注记录。
 
-![image-20200526215607840](/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526215607840.png)
+![image-20200526215607840](/images/oj_wp/image-20200526215607840.png)
 
 该盲注使用二分法进行flag爆破，当条件成立时回返回`183`，不成立时返回`182`，对1752-最后一组数据进行处理，将183返回值的最后一个、182返回值前的数据中的ascii值加一然后转为ascii码，综合得到flag
+
+
 
 ### day10-Shell
 
@@ -54,7 +64,7 @@ tag: 总结
 
 看上面的cat命令发现用到了`swapcase()`函数，将字符串使用`swapcase()`函数处理一下再用base64解码可以get flag
 
-<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526183305149.png" alt="image-20200526183305149" style="zoom: 25%;" />
+<img src="/images/oj_wp/image-20200526183305149.png" alt="image-20200526183305149" style="zoom: 25%;" />
 
 
 
@@ -62,15 +72,19 @@ tag: 总结
 
 打开数据包，追踪TCP数据流，选择HEX查看，发现有些数据后面有一些字符串，
 
-<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526173555575.png" alt="image-20200526173555575" style="zoom: 25%;" />
+<img src="/images/oj_wp/image-20200526173555575.png" alt="image-20200526173555575" style="zoom: 25%;" />
 
 将这些数据保存问原始数据，根据提示写脚本处理，可以看到输出，get flag
 
-<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526180702327.png" alt="image-20200526180702327" style="zoom: 33%;" />
+<img src="/images/oj_wp/image-20200526180702327.png" alt="image-20200526180702327" style="zoom: 33%;" />
+
+
 
 ### day10-Email
 
 追踪流-TCP流，依次查看TCP流，在流4中可以看到很长的一段base64，编码上方有`filename=20161008103416509320.7z`字样，编码方式为base64，猜测下方的base64为这个7z文件的内容，保存数据为原始数据，写脚本对base字符串进行base64解码，将解码的结果保存为.7文件。随后打开7z文件发现需要密码，回到原始数据里面找，发现有`附件密码是：x x x x`，输入密码，压缩包里是一个通知文件，十六进制打开，搜索flag格式，get flag
+
+
 
 ### day10-Invisible flag
 
@@ -94,13 +108,15 @@ for i in range(1024):
 
 高度修改成534
 
-<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526135008681.png" alt="image-20200526135008681" style="zoom: 67%;" />
+<img src="/images/oj_wp/image-20200526135008681.png" alt="image-20200526135008681" style="zoom: 67%;" />
+
+
 
 ### day10-NTFS2
 
 这道题本来想用stegsolve做的，但是Mac上的这个软件的通道只能显示到2，懒得开虚拟机就直接用下面的方法做了
 
-<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526130359276.png" alt="image-20200526130359276" style="zoom: 33%;" />
+<img src="/images/oj_wp/image-20200526130359276.png" alt="image-20200526130359276" style="zoom: 33%;" />
 
 
 
@@ -108,7 +124,9 @@ for i in range(1024):
 
 使用NTFS ADS解即可，如图
 
-<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526113402338.png" alt="image-20200526113402338" style="zoom:50%;" />
+<img src="/images/oj_wp/image-20200526113402338.png" alt="image-20200526113402338" style="zoom:50%;" />
+
+
 
 ### day10-PkCrack
 
@@ -144,8 +162,6 @@ for i in range(1024):
 
 <img src="/images/oj_wp/image-20200525224755129.png" alt="image-20200525224755129" style="zoom:33%;" />
 
-![image-20200525224755129](/images/oj_wp/image-20200525224755129.png)
-
 
 
 ### day9-Exif
@@ -162,8 +178,6 @@ print(flag)
 ```
 
 <img src="/images/oj_wp/image-20200525225700404.png" alt="image-20200525225700404" style="zoom:33%;" />
-
-![image-20200525225700404](/images/oj_wp/image-20200525225700404.png)
 
 
 
@@ -239,8 +253,6 @@ Wireshark打开文件，然后追踪http流，发现有一组数据中提到flag
 
 <img src="/images/oj_wp/image-20200525214432331.png" alt="image-20200525214432331" style="zoom:33%;" />
 
-![image-20200525214432331](/images/oj_wp/image-20200525214432331.png)
-
 #### 解题思路：
 
 这是一道文件包含的题目。这道题中一共有两个页面，一个是home，一个是flag，访问flag page：`ha ha? you want flag? flag is here, but don't let you see!`，可以看出flag应该在这个页面中，但是没有显示出来。
@@ -256,8 +268,6 @@ http://vps1.blue-whale.me:23338/?page=php://filter/read=convert.base64-encode/re
 其中`read`的过滤器为base64，意为把输入流进行base64编码；`resource`指的是所要读取的文件
 
 <img src="/images/oj_wp/image-20200525215718596.png" alt="image-20200525215718596" style="zoom:33%;" />
-
-![image-20200525215718596](/images/oj_wp/image-20200525215718596.png)
 
 对获取到的内容进行base64解码，得到以下内容，get flag
 
@@ -275,8 +285,6 @@ ha ha? you want flag? flag is here<?php
 #### 题目描述：
 
 <img src="/images/oj_wp/image-20200525220221182.png" alt="image-20200525220221182" style="zoom:33%;" />
-
-![image-20200525220221182](/images/oj_wp/image-20200525220221182.png)
 
 #### 解题思路：
 
@@ -332,9 +340,7 @@ ha ha? you want flag? flag is here<?php
 
 #### 题目描述：
 
-<img src="/images/oj_wp/image-20200522231538713.png" alt="image-20200522231538713" style="zoom:33%;" />
-
-![image-20200522231538713](/images/oj_wp/image-20200522231538713.png)
+<img src="/images/oj_wp/image-20200522231538713.png" alt="image-20200522231538713" style="zoom:20%;" />
 
 #### 解题思路：
 
@@ -359,13 +365,9 @@ for i in range(0, 9999999):
 
 <img src="/images/oj_wp/image-20200522233240420.png" alt="image-20200522233240420" style="zoom:33%;" />
 
-![image-20200522233240420](/images/oj_wp/image-20200522233240420.png)
-
 显示留言成功并在管理员查看队列中，然后访问留言，发现弹窗，查看网页源代码，留言页面没有过滤`script`标签。
 
 <img src="/images/oj_wp/image-20200522233437142.png" alt="image-20200522233437142" style="zoom:33%;" />
-
-![image-20200522233437142](/images/oj_wp/image-20200522233437142.png)
 
 尝试构造语句获取cookie，其中地址是接收服务器的地址：
 
@@ -379,13 +381,9 @@ document.body.appendChild(img);</script>
 
 <img src="/images/oj_wp/C060424737C3DD81BEBD02319F001DEA.png" alt="C060424737C3DD81BEBD02319F001DEA" style="zoom:33%;" />
 
-![C060424737C3DD81BEBD02319F001DEA](/images/oj_wp/C060424737C3DD81BEBD02319F001DEA.png)
-
 使用这个cookie访问admin.php即可获得flag
 
 <img src="/images/oj_wp/image-20200523000907465.png" alt="image-20200523000907465" style="zoom:33%;" />
-
-![image-20200523000907465](/images/oj_wp/image-20200523000907465.png)
 
 
 
@@ -395,11 +393,7 @@ document.body.appendChild(img);</script>
 
 <img src="/images/oj_wp/image-20200519205227987.png" alt="image-20200519205227987" style="zoom:33%;" />
 
-![image-20200519205227987](/images/oj_wp/image-20200519205227987.png)
-
 <img src="/images/oj_wp/image-20200519205317245.png" alt="image-20200519205317245" style="zoom:33%;" />
-
-![image-20200519205317245](/images/oj_wp/image-20200519205317245.png)
 
 #### 解题思路
 
@@ -409,9 +403,13 @@ try写个shell进去，但是又过滤了`<` 和`php`，对于stripos()函数可
 
 <img src="/images/oj_wp/image-20200519205631617.png" alt="image-20200519205631617" style="zoom:33%;" />
 
-![image-20200519205631617](/images/oj_wp/image-20200519205631617.png)
 
 
+> 
+>
+> 今天只做了一个题，希望赶紧把毕设搞完就可以愉快地做题了
+>
+> 
 
 ### day2-Rapid Typing
 
@@ -419,25 +417,19 @@ try写个shell进去，但是又过滤了`<` 和`php`，对于stripos()函数可
 
 <img src="/images/oj_wp/image-20200518180932073.png" alt="image-20200518180932073" style="zoom:33%;" />
 
-![image-20200518180932073](/images/oj_wp/image-20200518180932073.png)
-
 #### 解题思路：
 
 抓包发现base64，解码得到一个html，用BeautifulSoup就可以了，一开始没注意还有坐标问题，试了好几次都不对==、
 
-<img src="/images/oj_wp/image-20200518180842561.png" alt="image-20200518180842561" style="zoom:33%;" />
+<img src="/images/oj_wp/image-20200518180842561.png" alt="image-20200518180842561" style="zoom:20%;" />
 
-![image-20200518180842561](/images/oj_wp/image-20200518180842561.png)
 
-今天只做了一个题，希望赶紧把毕设搞完就可以愉快地做题了
 
 ### day1-Calculator
 
 #### 题目描述：
 
 <img src="/images/oj_wp/image-20200517224348519.png" alt="image-20200517224348519" style="zoom:33%;" />
-
-![image-20200517224348519](/images/oj_wp/image-20200517224348519.png)
 
 
 
@@ -446,8 +438,6 @@ try写个shell进去，但是又过滤了`<` 和`php`，对于stripos()函数可
 既然题目要求在1.5s内解出答案，肯定得用脚本了。抓包获取cookies然后放在脚本里就OK了，脚本猜测有写得更简洁的方法，但我暂时想到的就是这样。
 
 <img src="/images/oj_wp/image-20200517153139132.png" alt="image-20200517153139132" style="zoom:33%;" />
-
-![image-20200517153139132](/images/oj_wp/image-20200517153139132.png)
 
 #### 解题脚本
 
@@ -481,8 +471,6 @@ b'<!DOCTYPE html>\r\n<html>\r\n<head>\r\n\t<title>Calculator</title>\r\n\t<style
 
 <img src="/images/oj_wp/image-20200517121543980.png" alt="image-20200517121543980" style="zoom:33%;" />
 
-![image-20200517121543980](/images/oj_wp/image-20200517121543980.png)
-
 
 
 ### day1-PHP's basic feature
@@ -490,5 +478,3 @@ b'<!DOCTYPE html>\r\n<html>\r\n<head>\r\n\t<title>Calculator</title>\r\n\t<style
 有一些字符串md5加密后以0e开头，PHP在使用这些字符串时，会将字符串当作科学技术法来解释为0，从而使`==`成立。
 
 <img src="/images/oj_wp/image-20200517155517748.png" alt="image-20200517155517748" style="zoom:33%;" />
-
-![image-20200517155517748](/images/oj_wp/image-20200517155517748.png)
