@@ -6,8 +6,6 @@ description: "day9 wp"
 tag: 总结
 ---
 
-> 论文终于给老师检查完了，还是有需要修改的地方，不过终于可以做题咯
-
 # Misc Part
 
 ### day10-BabyBase
@@ -124,9 +122,15 @@ for i in range(1024):
 
 依然使用上一个软件，不过把模式改为爆破，get 密码，就可以看到flag啦
 
-<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526110113889.png" alt="image-20200526110113889" style="zoom:50%;" />
+<img src="/images/oj_wp/image-20200526110113889.png" alt="image-20200526110113889" style="zoom:50%;" />
 
 
+
+> 
+>
+> 论文终于给老师检查完了，还是有需要修改的地方，不过终于可以做题咯
+>
+> 
 
 ###  day9-Poem
 
@@ -137,6 +141,8 @@ for i in range(1024):
 ### day9-LSB
 
 题目给解法了，扫码，get flag
+
+<img src="/images/oj_wp/image-20200525224755129.png" alt="image-20200525224755129" style="zoom:33%;" />
 
 ![image-20200525224755129](/images/oj_wp/image-20200525224755129.png)
 
@@ -154,6 +160,8 @@ for i in list:
 	flag += chr(int(i))
 print(flag)
 ```
+
+<img src="/images/oj_wp/image-20200525225700404.png" alt="image-20200525225700404" style="zoom:33%;" />
 
 ![image-20200525225700404](/images/oj_wp/image-20200525225700404.png)
 
@@ -229,6 +237,8 @@ Wireshark打开文件，然后追踪http流，发现有一组数据中提到flag
 
 #### 题目描述：
 
+<img src="/images/oj_wp/image-20200525214432331.png" alt="image-20200525214432331" style="zoom:33%;" />
+
 ![image-20200525214432331](/images/oj_wp/image-20200525214432331.png)
 
 #### 解题思路：
@@ -244,6 +254,8 @@ http://vps1.blue-whale.me:23338/?page=php://filter/read=convert.base64-encode/re
 ```
 
 其中`read`的过滤器为base64，意为把输入流进行base64编码；`resource`指的是所要读取的文件
+
+<img src="/images/oj_wp/image-20200525215718596.png" alt="image-20200525215718596" style="zoom:33%;" />
 
 ![image-20200525215718596](/images/oj_wp/image-20200525215718596.png)
 
@@ -261,6 +273,8 @@ ha ha? you want flag? flag is here<?php
 ### day 9-Basic SQL
 
 #### 题目描述：
+
+<img src="/images/oj_wp/image-20200525220221182.png" alt="image-20200525220221182" style="zoom:33%;" />
 
 ![image-20200525220221182](/images/oj_wp/image-20200525220221182.png)
 
@@ -318,7 +332,7 @@ ha ha? you want flag? flag is here<?php
 
 #### 题目描述：
 
-![image-20200522231507580](/images/oj_wp/image-20200522231507580.png)
+<img src="/images/oj_wp/image-20200522231538713.png" alt="image-20200522231538713" style="zoom:33%;" />
 
 ![image-20200522231538713](/images/oj_wp/image-20200522231538713.png)
 
@@ -343,9 +357,13 @@ for i in range(0, 9999999):
 
 提交`<script>alert(1);</script>`测试留言板的过滤情况
 
+<img src="/images/oj_wp/image-20200522233240420.png" alt="image-20200522233240420" style="zoom:33%;" />
+
 ![image-20200522233240420](/images/oj_wp/image-20200522233240420.png)
 
 显示留言成功并在管理员查看队列中，然后访问留言，发现弹窗，查看网页源代码，留言页面没有过滤`script`标签。
+
+<img src="/images/oj_wp/image-20200522233437142.png" alt="image-20200522233437142" style="zoom:33%;" />
 
 ![image-20200522233437142](/images/oj_wp/image-20200522233437142.png)
 
@@ -359,9 +377,13 @@ document.body.appendChild(img);</script>
 
 服务器接收到了admin的cookie，
 
+<img src="/images/oj_wp/C060424737C3DD81BEBD02319F001DEA.png" alt="C060424737C3DD81BEBD02319F001DEA" style="zoom:33%;" />
+
 ![C060424737C3DD81BEBD02319F001DEA](/images/oj_wp/C060424737C3DD81BEBD02319F001DEA.png)
 
 使用这个cookie访问admin.php即可获得flag
+
+<img src="/images/oj_wp/image-20200523000907465.png" alt="image-20200523000907465" style="zoom:33%;" />
 
 ![image-20200523000907465](/images/oj_wp/image-20200523000907465.png)
 
@@ -371,7 +393,11 @@ document.body.appendChild(img);</script>
 
 #### 题目描述：
 
+<img src="/images/oj_wp/image-20200519205227987.png" alt="image-20200519205227987" style="zoom:33%;" />
+
 ![image-20200519205227987](/images/oj_wp/image-20200519205227987.png)
+
+<img src="/images/oj_wp/image-20200519205317245.png" alt="image-20200519205317245" style="zoom:33%;" />
 
 ![image-20200519205317245](/images/oj_wp/image-20200519205317245.png)
 
@@ -381,6 +407,8 @@ try写个shell进去，但是又过滤了`<` 和`php`，对于stripos()函数可
 
 8继续肝论文去了QAQ
 
+<img src="/images/oj_wp/image-20200519205631617.png" alt="image-20200519205631617" style="zoom:33%;" />
+
 ![image-20200519205631617](/images/oj_wp/image-20200519205631617.png)
 
 
@@ -389,11 +417,15 @@ try写个shell进去，但是又过滤了`<` 和`php`，对于stripos()函数可
 
 #### 题目描述
 
+<img src="/images/oj_wp/image-20200518180932073.png" alt="image-20200518180932073" style="zoom:33%;" />
+
 ![image-20200518180932073](/images/oj_wp/image-20200518180932073.png)
 
 #### 解题思路：
 
 抓包发现base64，解码得到一个html，用BeautifulSoup就可以了，一开始没注意还有坐标问题，试了好几次都不对==、
+
+<img src="/images/oj_wp/image-20200518180842561.png" alt="image-20200518180842561" style="zoom:33%;" />
 
 ![image-20200518180842561](/images/oj_wp/image-20200518180842561.png)
 
@@ -403,6 +435,8 @@ try写个shell进去，但是又过滤了`<` 和`php`，对于stripos()函数可
 
 #### 题目描述：
 
+<img src="/images/oj_wp/image-20200517224348519.png" alt="image-20200517224348519" style="zoom:33%;" />
+
 ![image-20200517224348519](/images/oj_wp/image-20200517224348519.png)
 
 
@@ -410,6 +444,8 @@ try写个shell进去，但是又过滤了`<` 和`php`，对于stripos()函数可
 #### 解题思路：
 
 既然题目要求在1.5s内解出答案，肯定得用脚本了。抓包获取cookies然后放在脚本里就OK了，脚本猜测有写得更简洁的方法，但我暂时想到的就是这样。
+
+<img src="/images/oj_wp/image-20200517153139132.png" alt="image-20200517153139132" style="zoom:33%;" />
 
 ![image-20200517153139132](/images/oj_wp/image-20200517153139132.png)
 
@@ -443,62 +479,16 @@ print(response.content)
 b'<!DOCTYPE html>\r\n<html>\r\n<head>\r\n\t<title>Calculator</title>\r\n\t<style type="text/css">\r\n\t\t.line_input{\r\n\t\t\tborder-width: 1px;\r\n\t\t\tborder-bottom: solid;\r\n\t\t\tborder-top: none;\r\n\t\t\tborder-left: none;\r\n\t\t\tborder-right: none;\r\n\t\t\tborder-width: 1px;\r\n\t\t\ttext-align: center;\r\n\t\t\toutline: none;\r\n\t\t\tmargin: 0 1em;\r\n\t\t}\r\n\t</style>\r\n</head>\r\n<body>\r\n<center>\r\n<h1>Yet Another Calculator</h1>\r\nflag{yes_you_are_calculat0r}<br />Time elapsed: 0.23214817047119 s<br />\r\n</center>\r\n</body>\r\n</html>'
 ```
 
+<img src="/images/oj_wp/image-20200517121543980.png" alt="image-20200517121543980" style="zoom:33%;" />
+
 ![image-20200517121543980](/images/oj_wp/image-20200517121543980.png)
 
 
 
 ### day1-PHP's basic feature
 
-#### 题目描述
-
-```PHP 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Exercise</title>
-    <meta charset="UTF-8">
-</head>
-<body>
-<h1>PHP's basic feature</h1><!--好吧其实是老套路了-->
-<?php
-require_once('flag.php');
-
-if (isset($_GET['name']) and isset($_GET['password']) && isset($_GET['test'])){
-    // ========== Stage 1 ========== 
-    $test=$_GET['test']; 
-    $test=md5($test); 
-
-    if($test=='0') { 
-        print 'You passed stage 1.<br />';
-    }
-    else{
-        print "Game over at stage 1."; 
-        exit();
-    }
-
-    // ========== Stage 2 ========== 
-    if ($_GET['name'] == $_GET['password']){
-        print 'Your password can not be your name.';
-        exit();
-    }
-    else if (sha1($_GET['name']) === sha1($_GET['password'])){
-        print 'You passed stage 2.<br />';
-        print 'Flag: '.$flag;
-    }
-    else{
-        print 'Invalid password';
-        exit();
-    }
-}
-echo '<hr />';
-show_source(__FILE__);
-?>
-</body>
-</html>
-```
-
-#### 解题思路
-
 有一些字符串md5加密后以0e开头，PHP在使用这些字符串时，会将字符串当作科学技术法来解释为0，从而使`==`成立。
+
+<img src="/images/oj_wp/image-20200517155517748.png" alt="image-20200517155517748" style="zoom:33%;" />
 
 ![image-20200517155517748](/images/oj_wp/image-20200517155517748.png)
