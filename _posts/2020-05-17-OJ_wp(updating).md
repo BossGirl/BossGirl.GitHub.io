@@ -10,6 +10,124 @@ tag: 总结
 
 # Misc Part
 
+### day10-BabyBase
+
+观察字符串可以发现每隔一个数字就有一个3，推测字符串为每两个一组，进行统计，发现范围都在30-39之内:
+
+<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526205526159.png" alt="image-20200526205526159" style="zoom:33%;" />
+
+将分割后的字符串处理，得到0-9组成的字符串,该字符串和上一组一样，每隔一个数字就有一个3，继续分割处理，发现范围在30-46之间，没有40，一共十六个数，猜测应该把字符转为十六进制
+
+<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526205421582.png" alt="image-20200526205421582" style="zoom:33%;" />
+
+<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526210333860.png" alt="image-20200526210333860" style="zoom:33%;" />
+
+对得到的十六进制字符串进行ascii解码，得到一串base64编码后的字符串
+
+<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526210730244.png" alt="image-20200526210730244" style="zoom:33%;" />
+
+对该字符串进行解码,的到base32编码后的字符串，
+
+<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526210916045.png" alt="image-20200526210916045" style="zoom:33%;" />
+
+对该字符串进行解码的到一串base32编码的字符串，继续解码，又的到base32编码，继续解码，的到一串base64编码的字符串，继续解码，又的到30-46的字符
+
+...
+
+...
+
+...
+
+重复以上活动，终于get flag（又是想暴打出题人的一天
+
+
+
+### day10-Log
+
+日志文件中是很多条数据，首先进行URL解码得到可读字符串，可以发现，在第1751组数据之后才是关于flag的盲注记录。
+
+![image-20200526215607840](/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526215607840.png)
+
+该盲注使用二分法进行flag爆破，当条件成立时回返回`183`，不成立时返回`182`，对1752-最后一组数据进行处理，将183返回值的最后一个、182返回值前的数据中的ascii值加一然后转为ascii码，综合得到flag
+
+### day10-Shell
+
+打开数据包，追踪TCP数据流，发现如下的内容，红框内的被base64编码后的应该就是flag，直接解码不对。
+
+看上面的cat命令发现用到了`swapcase()`函数，将字符串使用`swapcase()`函数处理一下再用base64解码可以get flag
+
+<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526183305149.png" alt="image-20200526183305149" style="zoom: 25%;" />
+
+
+
+### day10-Terminal
+
+打开数据包，追踪TCP数据流，选择HEX查看，发现有些数据后面有一些字符串，
+
+<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526173555575.png" alt="image-20200526173555575" style="zoom: 25%;" />
+
+将这些数据保存问原始数据，根据提示写脚本处理，可以看到输出，get flag
+
+<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526180702327.png" alt="image-20200526180702327" style="zoom: 33%;" />
+
+### day10-Email
+
+追踪流-TCP流，依次查看TCP流，在流4中可以看到很长的一段base64，编码上方有`filename=20161008103416509320.7z`字样，编码方式为base64，猜测下方的base64为这个7z文件的内容，保存数据为原始数据，写脚本对base字符串进行base64解码，将解码的结果保存为.7文件。随后打开7z文件发现需要密码，回到原始数据里面找，发现有`附件密码是：x x x x`，输入密码，压缩包里是一个通知文件，十六进制打开，搜索flag格式，get flag
+
+### day10-Invisible flag
+
+图片像是被截掉一部分了，可以通过修改图片的宽或高来查看是否有截断。
+
+查看十六进制文件，脚本爆破CRC校验码，获得宽度值为564，而图片图片中的高却为400的十六进制，所以应该需要改高度，but修改之后提示图片损坏，后来才知道Mac上面改有可能不生效或者报错...只能用win了。。果然，win下修改之后的图片出flag了==、
+
+```python
+import struct
+import binascii
+import os
+
+misc = open('whereisflag.png','rb').read()
+
+for i in range(1024):
+   data = misc[12:16] + struct.pack('>i',i) + misc[20:29]
+   crc32 = binascii.crc32(data) & 0xffffffff
+   if crc32 == 0x368C6D31:
+       print i
+```
+
+高度修改成534
+
+<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526135008681.png" alt="image-20200526135008681" style="zoom: 67%;" />
+
+### day10-NTFS2
+
+这道题本来想用stegsolve做的，但是Mac上的这个软件的通道只能显示到2，懒得开虚拟机就直接用下面的方法做了
+
+<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526130359276.png" alt="image-20200526130359276" style="zoom: 33%;" />
+
+
+
+### day10-NTFS
+
+使用NTFS ADS解即可，如图
+
+<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526113402338.png" alt="image-20200526113402338" style="zoom:50%;" />
+
+### day10-PkCrack
+
+题目都给了，使用AZPR解出未加密文件，get flag
+
+<img src="/images/oj_wp/image-20200526105707457.png" alt="image-20200526105707457" style="zoom:50%;" />
+
+
+
+### day10-Birthday
+
+依然使用上一个软件，不过把模式改为爆破，get 密码，就可以看到flag啦
+
+<img src="/Users/secat/SKSEC/GitHub/BossGirl.github.io/images/oj_wp/image-20200526110113889.png" alt="image-20200526110113889" style="zoom:50%;" />
+
+
+
 ###  day9-Poem
 
 看图结合蛤->想起一句诗，把诗输入，get flag
